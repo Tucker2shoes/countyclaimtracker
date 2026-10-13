@@ -1,3 +1,205 @@
+/* BRAND COLORS */
+:root {
+  --primary: #2A4DFF;
+  --primary-dark: #1F3BCC;
+  --secondary: #F5F7FF;
+  --text-dark: #333;
+  --text-light: #555;
+  --border: #e5e5e5;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* GLOBAL */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: white;
+  color: var(--text-dark);
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 25px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+}
+
+.nav-right a {
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.nav-right a:hover {
+  color: var(--primary);
+}
+
+/* PAGE CONTAINER */
+.page-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: var(--secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* BUTTONS */
+.button {
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.button.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.button.primary:hover {
+  background: var(--primary-dark);
+}
+
+.button.secondary {
+  background: var(--border);
+  color: var(--text-dark);
+}
+
+/* SEARCH BOX */
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.search-box button {
+  padding: 12px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: var(--primary-dark);
+}
+
+/* RESULT CARDS */
+.result-item {
+  background: var(--secondary);
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* PRICING */
+.pricing-box {
+  background: var(--secondary);
+  padding: 30px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  text-align: center;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+.price {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* CHECKOUT FORM */
+.checkout-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkout-form input {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* SUCCESS */
+.success-box {
+  background: var(--secondary);
+  padding: 25px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  text-align: center;
+  margin-top: 30px;
+  box-shadow: var(--shadow);
+}
+
+/* ADMIN */
+.admin-section {
+  margin-top: 40px;
+}
+
+.admin-box {
+  background: var(--secondary);
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-top: 10px;
+  box-shadow: var(--shadow);
+}
+
 nav {
   background: #f5f5f5;
   padding: 10px;
