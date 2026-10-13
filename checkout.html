@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="checkout.js"></script>
+</head>
+
+<body onload="loadRefund()">
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="logo">CountyClaimTracker</a>
+    </div>
+    <div class="nav-right">
+      <a href="search.html">Search</a>
+      <a href="pricing.html">Claim Kits</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <h2 class="page-title">Unlock Full Record</h2>
+    <p class="page-subtitle">Confirm your details to access the full claim kit.</p>
+
+    <div id="refundDetails" class="result-item"></div>
+
+    <div class="checkout-form">
+      <input id="customerName" type="text" placeholder="Your Name">
+      <input id="customerEmail" type="email" placeholder="Your Email">
+      <button onclick="completeOrder()" class="button primary">Proceed to Payment</button>
+    </div>
+  </div>
+
+</body>
+</html>
