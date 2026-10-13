@@ -41,6 +41,16 @@ async function completeOrder() {
     return;
   }
 
+  // Save customer info temporarily in localStorage
+  localStorage.setItem("pending_name", name);
+  localStorage.setItem("pending_email", email);
+  localStorage.setItem("pending_refund", refundId);
+
+  // Redirect to Stripe Checkout
+  window.location.href = import.meta.env.STRIPE_CHECKOUT_URL;
+}
+
+
   const { error } = await supabase
     .from('orders')
     .insert({
