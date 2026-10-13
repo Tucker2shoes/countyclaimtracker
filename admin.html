@@ -5,18 +5,39 @@
   <link rel="stylesheet" href="style.css">
   <script type="module" src="admin.js"></script>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Admin Dashboard</h2>
 
-    <h3>Orders</h3>
-    <div id="ordersBox"></div>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="logo">CountyClaimTracker</a>
+    </div>
+    <div class="nav-right">
+      <a href="search.html">Search</a>
+      <a href="pricing.html">Claim Kits</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
 
-    <h3>Leads</h3>
-    <div id="leadsBox"></div>
+  <div class="page-container">
+    <h2 class="page-title">Admin Dashboard</h2>
 
-    <h3>Refunds</h3>
-    <div id="refundsBox"></div>
+    <div class="admin-section">
+      <h3>Orders</h3>
+      <div id="ordersBox" class="admin-box"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Leads</h3>
+      <div id="leadsBox" class="admin-box"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Refunds</h3>
+      <div id="refundsBox" class="admin-box"></div>
+    </div>
   </div>
+
 </body>
 </html>
+
