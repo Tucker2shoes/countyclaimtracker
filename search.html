@@ -1,5 +1,37 @@
-<nav>
-  <a href="index.html">Home</a>
-  <a href="pricing.html">Claim Kits</a>
-  <a href="admin.html">Admin</a>
-</nav>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Refunds</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="search.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="logo">CountyClaimTracker</a>
+    </div>
+    <div class="nav-right">
+      <a href="search.html">Search</a>
+      <a href="pricing.html">Claim Kits</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
+
+  <div class="page-container">
+
+    <h2 class="page-title">Search for Unclaimed Refunds</h2>
+    <p class="page-subtitle">Enter a name to check for available refunds.</p>
+
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Search by name...">
+      <button onclick="runSearch()">Search</button>
+    </div>
+
+    <div id="results" class="results-container"></div>
+
+  </div>
+
+</body>
+</html>
