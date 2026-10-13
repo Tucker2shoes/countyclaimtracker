@@ -14,3 +14,104 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 15px 25px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #333;
+  margin-left: 20px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a4dff;
+}
+
+/* PAGE CONTAINER */
+.page-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* SEARCH BOX */
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.search-box button {
+  padding: 12px 20px;
+  background: #2a4dff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #1f3bcc;
+}
+
+/* RESULTS */
+.results-container {
+  margin-top: 20px;
+}
+
+.result-item {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+}
+
+.result-item p {
+  margin: 5px 0;
+}
+
+.result-item button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #2a4dff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.result-item button:hover {
+  background: #1f3bcc;
+}
