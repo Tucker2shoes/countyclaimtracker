@@ -97,6 +97,99 @@ nav a:hover {
   border: 1px solid #e5e5e5;
   margin-bottom: 20px;
 }
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.hero-buttons .button {
+  margin: 10px;
+}
+
+/* BUTTONS */
+.button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.button.primary {
+  background: #2a4dff;
+  color: white;
+}
+
+.button.secondary {
+  background: #e5e5e5;
+  color: #333;
+}
+
+/* PRICING */
+.pricing-box {
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+/* CHECKOUT FORM */
+.checkout-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkout-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* SUCCESS BOX */
+.success-box {
+  background: #fafafa;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* ADMIN */
+.admin-section {
+  margin-top: 40px;
+}
+
+.admin-box {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  margin-top: 10px;
+}
+
 
 .result-item p {
   margin: 5px 0;
