@@ -1,71 +1,59 @@
-// ⭐ RUN SEARCH
-async function runSearch() {
-  const searchInput = document.getElementById("searchInput").value.trim();
+const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
+const supabaseKey = "YOUR_ANON_KEY_HERE";
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  if (!searchInput) {
-    alert("Please enter a name to search.");
+async function runSearch() {
+  const input = document.getElementById("searchInput").value.trim();
+  const resultsDiv = document.getElementById("results");
+
+  if (!input) {
+    resultsDiv.innerHTML = "<p>Please enter a name.</p>";
     return;
   }
 
-  // Query your imported table
+  resultsDiv.innerHTML = "<p>Searching...</p>";
+
   const { data, error } = await supabase
-    .from("refunds_master")        // ← your actual table
+    .from("refunds_master")
     .select("*")
-    .ilike("owner_name", `%${searchInput}%`);  // ← your CSV column
+    .ilike("owner_name", `%${input}%`)
+    .limit(25);
 
   if (error) {
-    console.error("Search error:", error);
-    alert("There was an error performing the search.");
+    resultsDiv.innerHTML = "<p>Error searching records.</p>";
     return;
   }
 
-  displayResults(data);
-}
+  if (!data || data.length === 0) {
+    resultsDiv.innerHTML = "<p>No records found for that name.</p>";
+    return;
+  }
 
+  let html = `<div class="results-header">Results (${data.length})</div>`;
 
-
-// ⭐ DISPLAY RESULTS (Beautiful Branded Cards)
-function displayResults(results) {
-  const container = document.getElementById("results");
-  container.innerHTML = "";
-
-  if (!results || results.length === 0) {
-    container.innerHTML = `
-      <div class="no-results">
-        No matching records found.
+  data.forEach(row => {
+    html += `
+      <div class="record-card">
+        <h3>${row.owner_name || "Unknown Name"}</h3>
+        <p><strong>County:</strong> ${row.county || "N/A"}</p>
+        <p><strong>City:</strong> ${row.city || "N/A"}</p>
+        <p><strong>Amount:</strong> $${row.amount_num || "0.00"}</p>
+        <p><strong>APN:</strong> ${row.apn || "N/A"}</p>
+        <p><strong>Reference #:</strong> ${row.reference_number || "N/A"}</p>
+        <button class="unlock-btn" onclick="goToCheckout('${row.record_id}')">
+          Unlock This Record ($9)
+        </button>
       </div>
     `;
-    return;
-  }
-
-  results.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "result-card";
-
-    card.innerHTML = `
-      <h3>${item.owner_name || "Unknown Name"}</h3>
-
-      <p><strong>County:</strong> ${item.county || "N/A"}</p>
-      <p><strong>City:</strong> ${item.city || "N/A"}</p>
-      <p><strong>Amount:</strong> $${item.amount_num || "0.00"}</p>
-      <p><strong>APN:</strong> ${item.apn || "N/A"}</p>
-      <p><strong>Reference #:</strong> ${item.reference_number || "N/A"}</p>
-
-      <button class="unlock-btn" onclick="unlockRecord('${item.record_id}')">
-        Unlock Full Record
-      </button>
-    `;
-
-    container.appendChild(card);
   });
+
+  resultsDiv.innerHTML = html;
 }
 
-
-
-// ⭐ UNLOCK BUTTON HANDLER (Goes at the VERY bottom)
-function unlockRecord(recordId) {
-  window.location.href = `checkout.html?record=${recordId}`;
+function goToCheckout(recordId) {
+  window.location.href = `checkout.html?record=${encodeURIComponent(recordId)}`;
 }
+
 
 
 
