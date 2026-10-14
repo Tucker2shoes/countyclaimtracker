@@ -1,5 +1,5 @@
 const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
-const supabaseKey = "YOUR_ANON_KEY_HERE";
+const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU";
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 async function runSearch() {
