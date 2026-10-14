@@ -17,7 +17,41 @@ async function runSearch() {
     return;
   }
 
-  displayResults(data);
+  function displayResults(results) {
+  const container = document.getElementById("results");
+  container.innerHTML = "";
+
+  if (!results || results.length === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        No matching records found.
+      </div>
+    `;
+    return;
+  }
+
+  results.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "result-card";
+
+    card.innerHTML = `
+      <h3>${item.owner_name || "Unknown Name"}</h3>
+
+      <p><strong>County:</strong> ${item.county || "N/A"}</p>
+      <p><strong>City:</strong> ${item.city || "N/A"}</p>
+      <p><strong>Amount:</strong> $${item.amount_num || "0.00"}</p>
+      <p><strong>APN:</strong> ${item.apn || "N/A"}</p>
+      <p><strong>Reference #:</strong> ${item.reference_number || "N/A"}</p>
+
+      <button class="unlock-btn" onclick="unlockRecord('${item.record_id}')">
+        Unlock Full Record
+      </button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
 }
 
 
