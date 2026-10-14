@@ -1,5 +1,5 @@
 const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4cGpleWNwemR5cnRhdG9rcXluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MDc5NzgsImV4cCI6MjEwNzQ4Mzk3OH0.xL4QMOowoRq7lwsUcd7xurlRIgcsBfYCYFA7vhbBvuk";
+const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU";
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 window.onload = async function () {
