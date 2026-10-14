@@ -49,8 +49,9 @@ async function runSearch() {
 
     div.innerHTML = `
       <p><strong>Name:</strong> ${refund.owner_name}</p>
-      <p><strong>County:</strong> ${blurredCounty}</p>
-      <p><strong>Refund Amount:</strong> $${refund.amount_num}</p>
+<p><strong>Refund Amount:</strong> $${refund.amount_num}</p>
+<button onclick="unlock('${refund.record_id}')">Unlock Full Record</button>
+
 
       <button class="unlock-btn" onclick="unlock('${refund.record_id}')">
         Unlock Full Record ($9)
