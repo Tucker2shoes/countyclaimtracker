@@ -1,72 +1,54 @@
-import { supabase } from './supabase.js';
+// ⭐ Initialize Supabase
+const supabaseUrl = "https://YOUR-SUPABASE-URL.supabase.co";
+const supabaseKey = "YOUR-SUPABASE-ANON-KEY";
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-async function loadRefund() {
+
+// ⭐ Load the record when the page opens
+window.onload = async function () {
   const params = new URLSearchParams(window.location.search);
-  const refundId = params.get("refund_id");
+  const recordId = params.get("record");
 
-  if (!refundId) {
-    document.getElementById("refundDetails").innerHTML = "Invalid refund ID.";
+  if (!recordId) {
+    document.getElementById("recordDetails").innerHTML = "Invalid record ID.";
     return;
   }
 
+  // Fetch the record from your imported table
   const { data, error } = await supabase
-    .from('refunds')
-    .select('*')
-    .eq('id', refundId)
+    .from("refunds_master")
+    .select("*")
+    .eq("record_id", recordId)
     .single();
 
   if (error || !data) {
-    document.getElementById("refundDetails").innerHTML = "Refund not found.";
+    document.getElementById("recordDetails").innerHTML = "Record not found.";
     return;
   }
 
-  document.getElementById("refundDetails").innerHTML = `
-    <p><strong>Name:</strong> ${data.name}</p>
-    <p><strong>County:</strong> ${data.county}</p>
-    <p><strong>Refund Amount:</strong> $${data.amount}</p>
+  // ⭐ Display the record
+  document.getElementById("recordDetails").innerHTML = `
+    <h3>${data.owner_name || "Unknown Name"}</h3>
+
+    <p><strong>County:</strong> ${data.county || "N/A"}</p>
+    <p><strong>City:</strong> ${data.city || "N/A"}</p>
+    <p><strong>Amount:</strong> $${data.amount_num || "0.00"}</p>
+    <p><strong>APN:</strong> ${data.apn || "N/A"}</p>
+    <p><strong>Reference #:</strong> ${data.reference_number || "N/A"}</p>
   `;
+
+  // ⭐ Show the checkout button
+  document.getElementById("checkoutButton").style.display = "block";
+
+  // ⭐ Attach Stripe checkout handler
+  document.getElementById("checkoutButton").onclick = function () {
+    startCheckout(recordId);
+  };
+};
+
+
+// ⭐ Stripe Checkout Redirect
+function startCheckout(recordId) {
+  // Redirect to your Stripe payment page
+  window.location.href = `https://buy.stripe.com/YOUR_STRIPE_CHECKOUT_LINK?record=${recordId}`;
 }
-
-window.loadRefund = loadRefund;
-
-async function completeOrder() {
-  const params = new URLSearchParams(window.location.search);
-  const refundId = params.get("refund_id");
-
-  const name = document.getElementById("customerName").value.trim();
-  const email = document.getElementById("customerEmail").value.trim();
-
-  if (!name || !email) {
-    alert("Enter your name and email.");
-    return;
-  }
-
-  // Save customer info temporarily in localStorage
-  localStorage.setItem("pending_name", name);
-  localStorage.setItem("pending_email", email);
-  localStorage.setItem("pending_refund", refundId);
-
-  // Redirect to Stripe Checkout
-  window.location.href = import.meta.env.STRIPE_CHECKOUT_URL;
-}
-
-
-  const { error } = await supabase
-    .from('orders')
-    .insert({
-      customer_name: name,
-      customer_email: email,
-      refund_id: refundId,
-      amount_paid: 19.00
-    });
-
-  if (error) {
-    console.error(error);
-    alert("Order failed.");
-    return;
-  }
-
-  window.location.href = "success.html";
-}
-
-window.completeOrder = completeOrder;
