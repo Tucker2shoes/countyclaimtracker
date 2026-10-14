@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Search Refunds</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="search.js"></script>
-</head>
+  <title>CountyClaimTracker Search</title>
 
+  <!-- BRANDING -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- YOUR SEARCH.JS -->
+  <script src="search.js" defer></script>
+
+</head>
 <body>
 
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="logo">CountyClaimTracker</a>
-    </div>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">CountyClaimTracker</div>
     <div class="nav-right">
+      <a href="index.html">Home</a>
       <a href="search.html">Search</a>
-      <a href="pricing.html">Claim Kits</a>
       <a href="admin.html">Admin</a>
     </div>
-  </nav>
+  </div>
 
+  <!-- PAGE CONTAINER -->
   <div class="page-container">
 
-    <h2 class="page-title">Search for Unclaimed Refunds</h2>
-    <p class="page-subtitle">Enter a name to check for available refunds.</p>
+    <h1>Search Refund Records</h1>
+    <p>Enter a name to find unclaimed refunds.</p>
 
+    <!-- SEARCH BOX -->
     <div class="search-box">
-      <input id="searchInput" type="text" placeholder="Search by name...">
+      <input id="searchInput" type="text" placeholder="Enter name (e.g., Smith)">
       <button onclick="runSearch()">Search</button>
     </div>
 
-    <div id="results" class="results-container"></div>
+    <!-- ⭐ REQUIRED: RESULTS CONTAINER -->
+    <div id="results"></div>
 
   </div>
 
