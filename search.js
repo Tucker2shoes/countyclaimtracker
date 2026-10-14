@@ -1,3 +1,4 @@
+// ⭐ RUN SEARCH
 async function runSearch() {
   const searchInput = document.getElementById("searchInput").value.trim();
 
@@ -6,8 +7,9 @@ async function runSearch() {
     return;
   }
 
+  // Query your imported table
   const { data, error } = await supabase
-    .from("refunds_master")   // ← your imported table
+    .from("refunds_master")        // ← your actual table
     .select("*")
     .ilike("owner_name", `%${searchInput}%`);  // ← your CSV column
 
@@ -17,7 +19,13 @@ async function runSearch() {
     return;
   }
 
-  function displayResults(results) {
+  displayResults(data);
+}
+
+
+
+// ⭐ DISPLAY RESULTS (Beautiful Branded Cards)
+function displayResults(results) {
   const container = document.getElementById("results");
   container.innerHTML = "";
 
@@ -52,6 +60,12 @@ async function runSearch() {
   });
 }
 
+
+
+// ⭐ UNLOCK BUTTON HANDLER (Goes at the VERY bottom)
+function unlockRecord(recordId) {
+  window.location.href = `checkout.html?record=${recordId}`;
 }
+
 
 
