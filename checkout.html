@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Checkout</title>
+  <title>CountyClaimTracker Checkout</title>
+
+  <!-- BRANDING -->
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="checkout.js"></script>
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- CHECKOUT SCRIPT -->
+  <script src="checkout.js" defer></script>
+
 </head>
+<body>
 
-<body onload="loadRefund()">
-
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="logo">CountyClaimTracker</a>
-    </div>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">CountyClaimTracker</div>
     <div class="nav-right">
+      <a href="index.html">Home</a>
       <a href="search.html">Search</a>
-      <a href="pricing.html">Claim Kits</a>
       <a href="admin.html">Admin</a>
     </div>
-  </nav>
+  </div>
 
+  <!-- PAGE CONTAINER -->
   <div class="page-container">
-    <h2 class="page-title">Unlock Full Record</h2>
-    <p class="page-subtitle">Confirm your details to access the full claim kit.</p>
 
-    <div id="refundDetails" class="result-item"></div>
+    <h1>Unlock Refund Record</h1>
+    <p>Review the record below and proceed to unlock the full claim kit.</p>
 
-    <div class="checkout-form">
-      <input id="customerName" type="text" placeholder="Your Name">
-      <input id="customerEmail" type="email" placeholder="Your Email">
-      <button onclick="completeOrder()" class="button primary">Proceed to Payment</button>
+    <!-- ⭐ RECORD DETAILS -->
+    <div id="recordDetails" class="record-card">
+      Loading record...
     </div>
+
+    <!-- ⭐ CHECKOUT BUTTON -->
+    <button id="checkoutButton" class="unlock-btn" style="display:none;">
+      Unlock This Record ($9)
+    </button>
+
   </div>
 
 </body>
 </html>
+
