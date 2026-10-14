@@ -1,6 +1,6 @@
 // ⭐ Initialize Supabase
-const supabaseUrl = "https://YOUR-SUPABASE-URL.supabase.co";
-const supabaseKey = "YOUR-SUPABASE-ANON-KEY";
+const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4cGpleWNwemR5cnRhdG9rcXluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MDc5NzgsImV4cCI6MjEwNzQ4Mzk3OH0.xL4QMOowoRq7lwsUcd7xurlRIgcsBfYCYFA7vhbBvuk";
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 
@@ -50,5 +50,5 @@ window.onload = async function () {
 // ⭐ Stripe Checkout Redirect
 function startCheckout(recordId) {
   // Redirect to your Stripe payment page
-  window.location.href = `https://buy.stripe.com/YOUR_STRIPE_CHECKOUT_LINK?record=${recordId}`;
+  window.location.href = 'https://buy.stripe.com/3cI14oaKF5CD5tR4xR6c00x?record=${recordId}';
 }
