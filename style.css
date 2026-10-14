@@ -410,3 +410,45 @@ nav a:hover {
 .result-item button:hover {
   background: #1f3bcc;
 }
+/* SEARCH RESULT CARDS */
+.result-card {
+  background: var(--secondary);
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.result-card h3 {
+  margin-top: 0;
+  color: var(--primary);
+}
+
+.result-card p {
+  margin: 6px 0;
+}
+
+.unlock-btn {
+  margin-top: 15px;
+  padding: 12px 18px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.unlock-btn:hover {
+  background: var(--primary-dark);
+}
+
+.no-results {
+  background: #fff3f3;
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid #ffcccc;
+  color: #b30000;
+  font-weight: 600;
+}
