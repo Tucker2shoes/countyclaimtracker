@@ -1,18 +1,25 @@
+// -------------------------------
+// Supabase connection
+// -------------------------------
 const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
 const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU";
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+// -------------------------------
+// Run Search
+// -------------------------------
 async function runSearch() {
   const input = document.getElementById("searchInput").value.trim();
-  const resultsDiv = document.getElementById("results");
+  const resultsBox = document.getElementById("results");
 
   if (!input) {
-    resultsDiv.innerHTML = "<p>Please enter a name.</p>";
+    resultsBox.innerHTML = "<p>Please enter a name.</p>";
     return;
   }
 
-  resultsDiv.innerHTML = "<p>Searching...</p>";
+  resultsBox.innerHTML = "<p>Searching...</p>";
 
+  // IMPORTANT: owner_name is the correct column
   const { data, error } = await supabase
     .from("refunds_master")
     .select("*")
@@ -20,38 +27,47 @@ async function runSearch() {
     .limit(25);
 
   if (error) {
-    resultsDiv.innerHTML = "<p>Error searching records.</p>";
+    resultsBox.innerHTML = "<p>Error searching records.</p>";
     return;
   }
 
   if (!data || data.length === 0) {
-    resultsDiv.innerHTML = "<p>No records found for that name.</p>";
+    resultsBox.innerHTML = "<p>No records found.</p>";
     return;
   }
 
-  let html = `<div class="results-header">Results (${data.length})</div>`;
+  resultsBox.innerHTML = ""; // clear
 
-  data.forEach(row => {
-    html += `
-      <div class="record-card">
-        <h3>${row.owner_name || "Unknown Name"}</h3>
-        <p><strong>County:</strong> ${row.county || "N/A"}</p>
-        <p><strong>City:</strong> ${row.city || "N/A"}</p>
-        <p><strong>Amount:</strong> $${row.amount_num || "0.00"}</p>
-        <p><strong>APN:</strong> ${row.apn || "N/A"}</p>
-        <p><strong>Reference #:</strong> ${row.reference_number || "N/A"}</p>
-        <button class="unlock-btn" onclick="goToCheckout('${row.record_id}')">
-          Unlock This Record ($9)
-        </button>
-      </div>
+  // -------------------------------
+  // Build result cards
+  // -------------------------------
+  data.forEach(refund => {
+    const blurredCounty = "••••"; // hide county
+
+    const div = document.createElement("div");
+    div.className = "result-item";
+
+    div.innerHTML = `
+      <p><strong>Name:</strong> ${refund.owner_name}</p>
+      <p><strong>County:</strong> ${blurredCounty}</p>
+      <p><strong>Refund Amount:</strong> $${refund.amount_num}</p>
+
+      <button class="unlock-btn" onclick="unlock('${refund.record_id}')">
+        Unlock Full Record ($9)
+      </button>
+
+      <hr>
     `;
-  });
 
-  resultsDiv.innerHTML = html;
+    resultsBox.appendChild(div);
+  });
 }
 
-function goToCheckout(recordId) {
-  window.location.href = `checkout.html?record=${encodeURIComponent(recordId)}`;
+// -------------------------------
+// Unlock → Checkout
+// -------------------------------
+function unlock(recordId) {
+  window.location.href = `checkout.html?record=${recordId}`;
 }
 
 
