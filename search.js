@@ -32,7 +32,7 @@ async function runSearch() {
   }
 
   if (!data || data.length === 0) {
-    resultsBox.innerHTML = "<p>No records search found.</p>";
+    resultsBox.innerHTML = "<p>No records found.</p>";
     return;
   }
 
