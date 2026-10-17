@@ -13,7 +13,7 @@ async function runSearch() {
   const resultsBox = document.getElementById("results");
 
   if (!input) {
-    resultsBox.innerHTML = "<p>Please enter a name.</p>";
+    resultsBox.innerHTML = "<p>Please enter a search name.</p>";
     return;
   }
 
@@ -32,7 +32,7 @@ async function runSearch() {
   }
 
   if (!data || data.length === 0) {
-    resultsBox.innerHTML = "<p>No records found.</p>";
+    resultsBox.innerHTML = "<p>No records search found.</p>";
     return;
   }
 
@@ -54,7 +54,7 @@ async function runSearch() {
 
 
       <button class="unlock-btn" onclick="unlock('${refund.record_id}')">
-        Unlock Full Record ($9)
+        Unlock Full Record ($49)
       </button>
 
       <hr>
