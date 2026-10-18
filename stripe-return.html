@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Processing...</title>
-  <script type="module" src="stripe-return.js"></script>
+  <title>Processing Payment – CountyClaimTracker</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- Stripe Return Logic -->
+  <script src="stripe-return.js" defer></script>
 </head>
+
 <body>
-  <p>Processing your order...</p>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">CountyClaimTracker</div>
+    <div class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="search.html">Search</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </div>
+
+  <!-- PAGE CONTAINER -->
+  <div class="page-container">
+
+    <h1>Processing Your Payment</h1>
+    <p>Please wait while we confirm your order.</p>
+
+    <div id="returnStatus" class="checkout-card">
+      Checking payment status...
+    </div>
+
+  </div>
+
 </body>
 </html>
