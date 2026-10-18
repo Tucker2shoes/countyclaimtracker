@@ -1,76 +1,54 @@
-// -------------------------------
-// Supabase connection
-// -------------------------------
-const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
-const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU";
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+// Initialize Supabase client
+const supabaseUrl = "https://qgdb21em7228bqjmeytms.supabase.co";
+const supabaseKey = "YOUR_ANON_KEY_HERE";  // Replace with your actual anon key
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// -------------------------------
-// Run Search
-// -------------------------------
+// Main search function
 async function runSearch() {
-  const input = document.getElementById("searchInput").value.trim();
-  const resultsBox = document.getElementById("results");
+    const lastName = document.getElementById("searchInput").value.trim();
 
-  if (!input) {
-    resultsBox.innerHTML = "<p>Please enter a search name.</p>";
-    return;
-  }
+    if (!lastName) {
+        document.getElementById("results").innerHTML =
+            "<p>Please enter a last name.</p>";
+        return;
+    }
 
-  resultsBox.innerHTML = "<p>Searching...</p>";
+    document.getElementById("results").innerHTML =
+        "<p>Searching...</p>";
 
-  // IMPORTANT: owner_name is the correct column
-  const { data, error } = await supabase
-    .from("refunds_master")
-    .select("*")
-    .ilike("owner_name", `%${input}%`)
-    .limit(25);
+    // Query Supabase
+    const { data, error } = await supabase
+        .from("refunds_master")
+        .select("*")
+        .ilike("owner_name", `%${lastName}%`)
+        .limit(25);
 
-  if (error) {
-    resultsBox.innerHTML = "<p>Error searching records.</p>";
-    return;
-  }
+    if (error) {
+        console.error("Supabase error:", error);
+        document.getElementById("results").innerHTML =
+            "<p>Error retrieving results.</p>";
+        return;
+    }
 
-  if (!data || data.length === 0) {
-    resultsBox.innerHTML = "<p>No records found.</p>";
-    return;
-  }
+    if (!data || data.length === 0) {
+        document.getElementById("results").innerHTML =
+            "<p>No matching records found.</p>";
+        return;
+    }
 
-  resultsBox.innerHTML = ""; // clear
+    // Build results HTML
+    let html = "<h2>Results</h2>";
 
-  // -------------------------------
-  // Build result cards
-  // -------------------------------
-  data.forEach(refund => {
-    const blurredCounty = "••••"; // hide county
+    data.forEach(record => {
+        html += `
+            <div class="result-card">
+                <p><strong>Name:</strong> ${record.owner_name}</p>
+                <p><strong>County:</strong> ${record.county}</p>
+                <p><strong>Amount:</strong> $${record.amount}</p>
+                <p><strong>Year:</strong> ${record.year}</p>
+            </div>
+        `;
+    });
 
-    const div = document.createElement("div");
-    div.className = "result-item";
-
-    div.innerHTML = `
-      <p><strong>Name:</strong> ${refund.owner_name}</p>
-<p><strong>Refund Amount:</strong> $${refund.amount_num}</p>
-<button onclick="unlock('${refund.record_id}')">Unlock Full Record</button>
-
-
-      <button class="unlock-btn" onclick="unlock('${refund.record_id}')">
-        Unlock Full Record ($49)
-      </button>
-
-      <hr>
-    `;
-
-    resultsBox.appendChild(div);
-  });
+    document.getElementById("results").innerHTML = html;
 }
-
-// -------------------------------
-// Unlock → Checkout
-// -------------------------------
-function unlock(recordId) {
-  window.location.href = `checkout.html?record=${recordId}`;
-}
-
-
-
-
