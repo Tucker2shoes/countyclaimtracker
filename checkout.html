@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CountyClaimTracker Checkout</title>
-
-  <!-- BRANDING -->
+  <title>CountyClaimTracker – Checkout</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- SUPABASE -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-  <!-- CHECKOUT SCRIPT -->
+  <!-- Checkout Logic -->
   <script src="checkout.js" defer></script>
-
 </head>
+
 <body>
 
   <!-- NAVBAR -->
@@ -21,6 +19,7 @@
     <div class="nav-right">
       <a href="index.html">Home</a>
       <a href="search.html">Search</a>
+      <a href="pricing.html">Pricing</a>
       <a href="admin.html">Admin</a>
     </div>
   </div>
@@ -28,21 +27,25 @@
   <!-- PAGE CONTAINER -->
   <div class="page-container">
 
-    <h1>Unlock Refund Record</h1>
-    <p>Review the record below and proceed to unlock the full claim kit.</p>
+    <h1>Checkout</h1>
+    <p>Review your selected product and proceed to secure payment.</p>
 
-    <!-- ⭐ RECORD DETAILS -->
-    <div id="recordDetails" class="record-card">
+    <!-- PRODUCT DETAILS -->
+    <div id="productDetails" class="checkout-card">
+      Loading product...
+    </div>
+
+    <!-- RECORD DETAILS (if coming from search) -->
+    <div id="recordDetails" class="checkout-card" style="display:none;">
       Loading record...
     </div>
 
-    <!-- ⭐ CHECKOUT BUTTON -->
-    <button id="checkoutButton" class="unlock-btn" style="display:none;">
-      Unlock This Record ($49)
+    <!-- CHECKOUT BUTTON -->
+    <button id="checkoutButton" class="primary-btn" style="display:none;">
+      Continue to Payment
     </button>
 
   </div>
 
 </body>
 </html>
-
