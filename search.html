@@ -6,6 +6,12 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- Global Supabase Client -->
+  <script src="supabase.js"></script>
+
+  <!-- Search Logic -->
+  <script src="search.js" defer></script>
 </head>
 
 <body>
@@ -16,6 +22,7 @@
     <div class="nav-right">
       <a href="index.html">Home</a>
       <a href="search.html">Search</a>
+      <a href="pricing.html">Pricing</a>
       <a href="admin.html">Admin</a>
     </div>
   </div>
@@ -24,23 +31,28 @@
   <div class="page-container">
 
     <h1>Search Refund Records</h1>
-    <p>Enter a last name to find potential county refunds.</p>
+    <p>Enter a last name to check for available county refunds.</p>
 
-    <!-- SEARCH BOX -->
-    <div class="search-box">
-      <input id="searchInput" type="text" placeholder="Enter last name (e.g., Smith)">
-      <button onclick="runSearch()">Search</button>
-    </div>
+    <!-- SEARCH FORM -->
+    <form id="searchForm" class="search-form">
+      <input 
+        id="searchInput" 
+        type="text" 
+        placeholder="Enter last name (e.g., Smith)" 
+        required
+      >
+      <button type="submit" class="primary-btn">Search</button>
+    </form>
 
     <!-- RESULTS -->
-    <div id="results"></div>
+    <div id="resultsBox" class="results-container">
+      <!-- Search results will appear here -->
+    </div>
 
   </div>
 
-  <!-- SEARCH LOGIC -->
-  <script src="search.js"></script>
-
 </body>
 </html>
+
 
 
