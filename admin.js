@@ -1,88 +1,99 @@
-import { supabase } from './supabase.js';
+// -----------------------------
+// Load all admin data on page load
+// -----------------------------
+window.addEventListener("DOMContentLoaded", () => {
+    loadOrders();
+    loadLeads();
+    loadRefunds();
+});
 
+// -----------------------------
+// Load Orders
+// -----------------------------
 async function loadOrders() {
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*')
-    .order('id', { ascending: false });
+    const box = document.getElementById("ordersBox");
+    box.innerHTML = "<p>Loading orders...</p>";
 
-  const box = document.getElementById('ordersBox');
-  box.innerHTML = "";
+    const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .order("id", { ascending: false });
 
-  if (error || !data) {
-    box.innerHTML = "Error loading orders.";
-    return;
-  }
+    if (error || !data) {
+        box.innerHTML = "<p>Error loading orders.</p>";
+        return;
+    }
 
-  data.forEach(order => {
-    box.innerHTML += `
-      <p>
-        <strong>Name:</strong> ${order.customer_name}<br>
-        <strong>Email:</strong> ${order.customer_email}<br>
-        <strong>Refund ID:</strong> ${order.refund_id}<br>
-        <strong>Amount Paid:</strong> $${order.amount_paid}<br>
-        <strong>Date:</strong> ${order.created_at}
-      </p>
-      <hr>
-    `;
-  });
+    if (data.length === 0) {
+        box.innerHTML = "<p>No orders found.</p>";
+        return;
+    }
+
+    let html = "";
+
+    data.forEach(order => {
+        html += `
+            <div class="admin-card">
+                <p><strong>Name:</strong> ${order.customer_name}</p>
+                <p><strong>Email:</strong> ${order.customer_email}</p>
+                <p><strong>Refund ID:</strong> ${order.refund_id || "None"}</p>
+                <p><strong>Amount Paid:</strong> $${order.amount_paid}</p>
+                <p><strong>Date:</strong> ${order.created_at}</p>
+            </div>
+        `;
+    });
+
+    box.innerHTML = html;
 }
 
+// -----------------------------
+// Load Leads
+// -----------------------------
 async function loadLeads() {
-  const { data, error } = await supabase
-    .from('leads')
-    .select('*')
-    .order('id', { ascending: false });
+    const box = document.getElementById("leadsBox");
+    box.innerHTML = "<p>Loading leads...</p>";
 
-  const box = document.getElementById('leadsBox');
-  box.innerHTML = "";
+    const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("id", { ascending: false });
 
-  if (error || !data) {
-    box.innerHTML = "Error loading leads.";
-    return;
-  }
+    if (error || !data) {
+        box.innerHTML = "<p>Error loading leads.</p>";
+        return;
+    }
 
-  data.forEach(lead => {
-    box.innerHTML += `
-      <p>
-        <strong>Name:</strong> ${lead.name}<br>
-        <strong>County:</strong> ${lead.county}<br>
-        <strong>Amount:</strong> $${lead.amount}<br>
-        <strong>Status:</strong> ${lead.status}<br>
-        <strong>Date:</strong> ${lead.created_at}
-      </p>
-      <hr>
-    `;
-  });
+    if (data.length === 0) {
+        box.innerHTML = "<p>No leads found.</p>";
+        return;
+    }
+
+    let html = "";
+
+    data.forEach(lead => {
+        html += `
+            <div class="admin-card">
+                <p><strong>Name:</strong> ${lead.name}</p>
+                <p><strong>County:</strong> ${lead.county}</p>
+                <p><strong>Amount:</strong> $${lead.amount}</p>
+                <p><strong>Status:</strong> ${lead.status}</p>
+                <p><strong>Date:</strong> ${lead.created_at}</p>
+
+                <button class="primary-btn small-btn" onclick="markLeadSold(${lead.id})">
+                    Mark as Sold
+                </button>
+            </div>
+        `;
+    });
+
+    box.innerHTML = html;
 }
 
-async function loadRefunds() {
-  const { data, error } = await supabase
-    .from('refunds')
-    .select('*')
-    .order('id', { ascending: false });
-
-  const box = document.getElementById('refundsBox');
-  box.innerHTML = "";
-
-  if (error || !data) {
-    box.innerHTML = "Error loading refunds.";
-    return;
-  }
-
-  data.forEach(refund => {
-    box.innerHTML += `
-      <p>
-        <strong>Name:</strong> ${refund.name}<br>
-        <strong>County:</strong> ${refund.county}<br>
-        <strong>Amount:</strong> $${refund.amount}<br>
-        <strong>Date:</strong> ${refund.created_at}
-      </p>
-      <hr>
-    `;
-  });
-}
-
-loadOrders();
-loadLeads();
-loadRefunds();
+// -----------------------------
+// Mark Lead as Sold
+// -----------------------------
+async function markLeadSold(id) {
+    const { error } = await supabase
+        .from("leads")
+        .update({ status: "sold" })
+        .eq("id",
