@@ -1,39 +1,75 @@
-const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co";
-const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU";
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+// -----------------------------
+// Supabase Initialization
+// -----------------------------
+const supabaseUrl = "https://qgdb21em7228bqjmeytms.supabase.co";
+const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU
+";   // Replace with your actual anon key
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-window.onload = async function () {
-  const params = new URLSearchParams(window.location.search);
-  const recordId = params.get("record");
+// -----------------------------
+// Load order details on page load
+// -----------------------------
+window.addEventListener("DOMContentLoaded", () => {
+    loadOrderDetails();
+});
 
-  if (!recordId) {
-    document.getElementById("recordDetails").innerHTML = "Invalid record ID.";
-    return;
-  }
+// -----------------------------
+// Load the most recent order
+// -----------------------------
+async function loadOrderDetails() {
+    const container = document.querySelector(".checkout-card");
 
-  const { data, error } = await supabase
-    .from("refunds_master")
-    .select("*")
-    .eq("record_id", recordId)
-    .single();
+    container.innerHTML = "<p>Loading your order...</p>";
 
-  if (error || !data) {
-    document.getElementById("recordDetails").innerHTML = "Record not found.";
-    return;
-  }
+    // Get the most recent order
+    const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(1);
 
-  document.getElementById("recordDetails").innerHTML = `
-    <h3>${data.owner_name}</h3>
+    if (error || !data || data.length === 0) {
+        container.innerHTML = "<p>Order details not found.</p>";
+        return;
+    }
 
-    <p><strong>County:</strong> ${data.county}</p>
-    <p><strong>City:</strong> ${data.city}</p>
-    <p><strong>Amount:</strong> $${data.amount_num}</p>
-    <p><strong>APN:</strong> ${data.apn}</p>
-    <p><strong>Reference #:</strong> ${data.reference_number}</p>
-  `;
-};
+    const order = data[0];
 
-// PDF button (we will build this next)
-document.getElementById("downloadKitBtn").onclick = function () {
-  alert("PDF generator coming next!");
-};
+    // Build product name
+    const productNames = {
+        essential: "Essential Claim Discovery Report",
+        complete: "Complete Claim Kit",
+        premium: "Premium Claim Kit + 1‑Year Monitoring",
+        monitoring: "CCT Annual Monitoring Service"
+    };
+
+    const productName = productNames[order.product] || "Claim Kit";
+
+    let html = `
+        <h2>Your Claim Kit Is Ready</h2>
+        <p><strong>Product:</strong> ${productName}</p>
+        <p><strong>Amount Paid:</strong> $${order.amount_paid}</p>
+    `;
+
+    // If a refund record was attached, load it
+    if (order.refund_id) {
+        const { data: recordData } = await supabase
+            .from("refunds_master")
+            .select("*")
+            .eq("id", order.refund_id)
+            .single();
+
+        if (recordData) {
+            html += `
+                <h3>Refund Record</h3>
+                <p><strong>Name:</strong> ${recordData.owner_name}</p>
+                <p><strong>County:</strong> ${recordData.county}</p>
+                <p><strong>Amount:</strong> $${recordData.amount}</p>
+                <p><strong>Year:</strong> ${recordData.year}</p>
+            `;
+        }
+    }
+
+    container.innerHTML = html;
+}
+
