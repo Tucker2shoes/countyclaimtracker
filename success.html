@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CountyClaimTracker – Unlock Successful</title>
-
+  <title>Order Complete – CountyClaimTracker</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="success.js" defer></script>
 </head>
 
 <body>
 
+  <!-- NAVBAR -->
   <div class="navbar">
     <div class="logo">CountyClaimTracker</div>
     <div class="nav-right">
       <a href="index.html">Home</a>
       <a href="search.html">Search</a>
+      <a href="pricing.html">Pricing</a>
       <a href="admin.html">Admin</a>
     </div>
   </div>
 
+  <!-- PAGE CONTAINER -->
   <div class="page-container">
 
-    <h1>Record Unlocked</h1>
-    <p>Your payment was successful. Here are your full record details:</p>
+    <h1>Success!</h1>
+    <p>Your order has been completed successfully.</p>
 
-    <div id="recordDetails" class="record-card">
-      Loading unlocked record...
+    <div class="checkout-card">
+      <h2>Your Claim Kit Is Ready</h2>
+      <p>
+        A confirmation email has been sent with your full record details  
+        and step‑by‑step instructions for filing your claim.
+      </p>
+      <p>
+        If you purchased monitoring, your coverage begins immediately.
+      </p>
     </div>
 
-    <button class="unlock-btn" id="downloadKitBtn" style="margin-top:20px;">
-      Download Claim Kit (PDF)
-    </button>
+    <a class="primary-btn" href="search.html">Back to Search</a>
 
   </div>
 
