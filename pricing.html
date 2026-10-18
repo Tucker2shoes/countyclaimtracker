@@ -1,34 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Claim Kit Pricing</title>
+  <title>CountyClaimTracker – Pricing</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="index.html" class="logo">CountyClaimTracker</a>
-    </div>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">CountyClaimTracker</div>
     <div class="nav-right">
+      <a href="index.html">Home</a>
       <a href="search.html">Search</a>
-      <a href="pricing.html">Claim Kits</a>
+      <a href="pricing.html">Pricing</a>
       <a href="admin.html">Admin</a>
     </div>
-  </nav>
+  </div>
 
+  <!-- PAGE CONTAINER -->
   <div class="page-container">
-    <h2 class="page-title">Claim Kit Pricing</h2>
-    <p class="page-subtitle">Unlock full refund details and step‑by‑step filing instructions.</p>
 
-    <div class="pricing-box">
-      <h3>Claim Kit Unlock</h3>
-      <p class="price">$49</p>
-      <p>Includes full refund details, county filing instructions, and downloadable claim kit.</p>
-      <a href="search.html" class="button primary">Search Refunds</a>
+    <h1>Pricing</h1>
+    <p>Select the option that fits your needs. All claim kits include step‑by‑step filing instructions.</p>
+
+    <!-- PRICING GRID -->
+    <div class="pricing-grid">
+
+      <!-- Essential Report -->
+      <div class="pricing-card">
+        <h2>Essential Claim Discovery Report</h2>
+        <p class="price">$49</p>
+        <ul>
+          <li>Full refund lookup</li>
+          <li>County contact details</li>
+          <li>DIY filing instructions</li>
+        </ul>
+        <a class="primary-btn" href="checkout.html?product=essential">Choose Essential</a>
+      </div>
+
+      <!-- Complete Kit -->
+      <div class="pricing-card">
+        <h2>Complete Claim Kit</h2>
+        <p class="price">$149</p>
+        <ul>
+          <li>Everything in Essential</li>
+          <li>All required forms</li>
+          <li>Pre‑filled templates</li>
+          <li>Mailing labels</li>
+        </ul>
+        <a class="primary-btn" href="checkout.html?product=complete">Choose Complete</a>
+      </div>
+
+      <!-- Premium Kit -->
+      <div class="pricing-card">
+        <h2>Premium Claim Kit + 1‑Year Monitoring</h2>
+        <p class="price">$199</p>
+        <ul>
+          <li>Everything in Complete</li>
+          <li>12 months refund monitoring</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="primary-btn" href="checkout.html?product=premium">Choose Premium</a>
+      </div>
+
+      <!-- Monitoring Only -->
+      <div class="pricing-card">
+        <h2>CCT Annual Monitoring Service</h2>
+        <p class="price">$79/yr or $9.99/mo</p>
+        <ul>
+          <li>Continuous refund monitoring</li>
+          <li>Instant alerts</li>
+          <li>Works even without a current claim</li>
+        </ul>
+        <a class="primary-btn" href="checkout.html?product=monitoring">Choose Monitoring</a>
+      </div>
+
     </div>
+
   </div>
 
 </body>
 </html>
+
