@@ -3,11 +3,14 @@
 <head>
   <title>CountyClaimTracker – Search</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="search.js" defer></script>
 </head>
+
 <body>
 
+  <!-- NAVBAR -->
   <div class="navbar">
     <div class="logo">CountyClaimTracker</div>
     <div class="nav-right">
@@ -17,19 +20,26 @@
     </div>
   </div>
 
+  <!-- PAGE CONTAINER -->
   <div class="page-container">
+
     <h1>Search Refund Records</h1>
     <p>Enter a last name to find potential county refunds.</p>
 
+    <!-- SEARCH BOX -->
     <div class="search-box">
       <input id="searchInput" type="text" placeholder="Enter last name (e.g., Smith)">
       <button onclick="runSearch()">Search</button>
     </div>
 
+    <!-- RESULTS -->
     <div id="results"></div>
+
   </div>
-  
+
+  <!-- YOUR SEARCH LOGIC -->
   <script src="search.js"></script>
 
 </body>
 </html>
+
