@@ -1,7 +1,7 @@
 // -----------------------------
 // Supabase Initialization
 // -----------------------------
-const supabaseUrl = "https://qgdb21em7228bqjmeytms.supabase.co;
+const supabaseUrl = "https://cxpjeycpzdyrtatokqyn.supabase.co;
 const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU
 ";   // Replace with your actual anon key
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
