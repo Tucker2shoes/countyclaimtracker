@@ -1,5 +1,5 @@
 // Initialize Supabase client for browser use
-const SUPABASE_URL = "https://qgdb21em7228bqjmeytms.supabase.co";
+const SUPABASE_URL = "https://cxpjeycpzdyrtatokqyn.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU
 ";   // Replace with your actual anon key
 
