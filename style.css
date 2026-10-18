@@ -239,3 +239,21 @@ h1 {
     font-size: 14px;
     margin-top: 10px;
 }
+/* SEARCH RESULT CARDS */
+.result-card {
+    background: #eef4ff;
+    border-left: 5px solid #003366;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.result-card p {
+    margin: 6px 0;
+}
+
+.small-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-top: 10px;
+}
