@@ -1,44 +1,48 @@
-// Initialize Supabase client
-const supabaseUrl = "https://qgdb21em7228bqjmeytms.supabase.co";
-const supabaseKey = "sb_publishable_E0YGdLypSl4wh-trkbbtCg_KydlRyfU
-";  // Replace with your actual anon key
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+// -----------------------------
+// Load search results when user submits the form
+// -----------------------------
+window.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("searchForm");
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            performSearch();
+        });
+    }
+});
 
-// Main search function
-async function runSearch() {
-    const lastName = document.getElementById("searchInput").value.trim();
+// -----------------------------
+// Perform Search
+// -----------------------------
+async function performSearch() {
+    const query = document.getElementById("searchInput").value.trim();
+    const resultsBox = document.getElementById("resultsBox");
 
-    if (!lastName) {
-        document.getElementById("results").innerHTML =
-            "<p>Please enter a last name.</p>";
+    if (!query) {
+        resultsBox.innerHTML = "<p>Please enter a last name.</p>";
         return;
     }
 
-    document.getElementById("results").innerHTML =
-        "<p>Searching...</p>";
+    resultsBox.innerHTML = "<p>Searching...</p>";
 
-    // Query Supabase
     const { data, error } = await supabase
         .from("refunds_master")
         .select("*")
-        .ilike("owner_name", `%${lastName}%`)
-        .limit(25);
+        .ilike("owner_name", `%${query}%`)
+        .order("owner_name", { ascending: true });
 
     if (error) {
-        console.error("Supabase error:", error);
-        document.getElementById("results").innerHTML =
-            "<p>Error retrieving results.</p>";
+        console.error(error);
+        resultsBox.innerHTML = "<p>Error performing search.</p>";
         return;
     }
 
     if (!data || data.length === 0) {
-        document.getElementById("results").innerHTML =
-            "<p>No matching records found.</p>";
+        resultsBox.innerHTML = "<p>No matching refunds found.</p>";
         return;
     }
 
-    // Build results HTML
-    let html = "<h2>Results</h2>";
+    let html = "";
 
     data.forEach(record => {
         html += `
@@ -47,9 +51,14 @@ async function runSearch() {
                 <p><strong>County:</strong> ${record.county}</p>
                 <p><strong>Amount:</strong> $${record.amount}</p>
                 <p><strong>Year:</strong> ${record.year}</p>
+
+                <a class="primary-btn small-btn"
+                   href="checkout.html?product=essential&refund_id=${record.id}">
+                   View Claim Options
+                </a>
             </div>
         `;
     });
 
-    document.getElementById("results").innerHTML = html;
+    resultsBox.innerHTML = html;
 }
