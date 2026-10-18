@@ -234,3 +234,8 @@ h1 {
     font-size: 14px;
     letter-spacing: 0.3px;
 }
+.small-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-top: 10px;
+}
