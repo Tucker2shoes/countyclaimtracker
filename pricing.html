@@ -1,85 +1,532 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>CountyClaimTracker – Pricing</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pricing — CountyClaimTracker</title>
+  <meta name="description" content="Simple pricing for CountyClaimTracker. Flat fees, no percentages. Start with a free search." />
+  <style>
+    :root{
+      --navy:#1a2744;
+      --orange:#f97316;
+      --green:#16a34a;
+      --white:#ffffff;
+      --gray:#f8fafc;
+      --muted:#6b7280;
+      --card-radius:12px;
+      --max-width:1100px;
+      --shadow: 0 10px 30px rgba(26,39,68,0.08);
+      --cta-height:56px;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      color:#0f172a;
+      background:linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Announcement bar */
+    .announcement{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      background:#0ea5e9; /* bright blue for announcement */
+      color:var(--white);
+      z-index:1200;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 16px;
+      font-weight:800;
+      gap:12px;
+    }
+    .announcement .msg{max-width:var(--max-width); width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .announcement .close{background:transparent;border:0;color:inherit;font-size:18px;cursor:pointer;padding:6px;}
+
+    /* Page container */
+    .page{max-width:var(--max-width); margin:84px auto 80px; padding:0 16px;}
+
+    /* Hero */
+    .hero{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .hero-left{max-width:720px;}
+    .prepill{display:inline-block;background:var(--orange);color:var(--white);padding:6px 10px;border-radius:999px;font-weight:900;margin-bottom:12px;}
+    h1{font-size:36px;margin:6px 0 8px;color:var(--navy);}
+    p.lead{color:var(--muted);margin:0 0 12px;font-weight:800;}
+    .tabs{display:flex; gap:8px; margin-top:12px;}
+    .tab-btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(26,39,68,0.06);background:var(--white);cursor:pointer;font-weight:900;}
+    .tab-btn.active{background:linear-gradient(180deg,#fff,#f7fbff);border-color:rgba(26,39,68,0.08);}
+
+    /* Billing toggle */
+    .billing-toggle{display:flex; gap:8px; align-items:center; margin-left:12px;}
+    .billing-toggle button{padding:8px 12px;border-radius:8px;border:1px solid rgba(26,39,68,0.06);background:var(--white);cursor:pointer;font-weight:800;}
+    .billing-toggle .active{background:var(--orange);color:var(--white);border-color:var(--orange);}
+
+    /* Pricing grid */
+    .pricing-grid{display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; align-items:flex-start;}
+    .card{background:var(--white); padding:18px; border-radius:12px; box-shadow:var(--shadow); min-width:220px; max-width:320px; flex:1; position:relative;}
+    .card.gray{background:#f8fafc;}
+    .card.dark{background:var(--navy); color:var(--white);}
+    .card.featured{border:2px solid var(--orange); transform:scale(1.02);}
+    .badge{position:absolute; top:-12px; right:-12px; background:var(--orange); color:var(--white); padding:6px 10px; border-radius:999px; font-weight:900; font-size:12px;}
+    .price{font-size:28px;font-weight:900;color:var(--navy);}
+    .price.dark{color:var(--white);}
+    .desc{color:var(--muted); margin-top:8px; font-weight:800;}
+    .buy{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:900;}
+    .buy.primary{background:var(--orange);color:var(--white);}
+    .buy.secondary{background:var(--navy);color:var(--white);}
+
+    /* Claim Watch dashed */
+    .card.dashed{border:2px dashed var(--orange);}
+
+    /* Guidance box */
+    .guidance{margin-top:18px;background:linear-gradient(180deg,#fff,#f7fbff);padding:14px;border-radius:10px;box-shadow:var(--shadow);font-weight:900;}
+
+    /* Value comparison table */
+    .comparison{margin-top:18px;background:var(--white);padding:14px;border-radius:10px;box-shadow:var(--shadow);overflow:auto;}
+    table{width:100%;border-collapse:collapse;font-weight:800;}
+    th,td{padding:10px;border-bottom:1px solid #eef2ff;text-align:left;}
+    th{background:#fbfdff;color:var(--navy);}
+
+    /* Callouts */
+    .callouts{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
+    .callout{flex:1; min-width:220px; padding:14px; border-radius:10px; box-shadow:var(--shadow); font-weight:900;}
+    .callout.green{background:linear-gradient(180deg,#ecfdf5,#f0fff4); color:var(--navy);}
+    .callout.amber{background:linear-gradient(180deg,#fff7ed,#fffaf0); color:var(--navy);}
+    .callout.blue{background:linear-gradient(180deg,#eff6ff,#f8fbff); color:var(--navy);}
+
+    /* Annual highlight */
+    .annual{margin-top:18px;background:var(--navy);color:var(--white);padding:18px;border-radius:12px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+    .best{background:var(--orange);color:var(--white);padding:6px 10px;border-radius:999px;font-weight:900;}
+
+    /* FAQ */
+    .faq{margin-top:18px;}
+    .accordion{background:var(--white);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;}
+    .qa{border-top:1px solid rgba(26,39,68,0.04);}
+    .qa button{width:100%;text-align:left;padding:14px;background:transparent;border:0;font-weight:900;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+    .qa .answer{padding:0 14px 14px 14px;color:var(--muted);display:none;font-weight:800;}
+
+    /* Final CTA */
+    .final-cta{margin-top:22px;background:linear-gradient(180deg,#fff,#f7fbff);padding:18px;border-radius:12px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+    .search-card{display:flex;gap:8px;align-items:center;}
+    .search-card input, .search-card select{padding:10px;border-radius:8px;border:1px solid #e6eef6;font-weight:800;}
+    .search-card .search-cta{background:var(--orange);color:var(--white);padding:12px 14px;border-radius:8px;border:0;font-weight:900;cursor:pointer;}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{flex-direction:column;align-items:flex-start;}
+      .pricing-grid{flex-direction:column;}
+      .callouts{flex-direction:column;}
+      .annual{flex-direction:column;align-items:flex-start;}
+      .final-cta{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
 </head>
-
 <body>
-
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <div class="logo">CountyClaimTracker</div>
-    <div class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="search.html">Search</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="admin.html">Admin</a>
+  <!-- Announcement -->
+  <div class="announcement" id="announcement">
+    <div class="msg">
+      <div>🎉 Annual Claim Watch — Save 34% when you choose annual billing</div>
+      <button class="close" id="dismissAnn" aria-label="Dismiss announcement">✕</button>
     </div>
   </div>
 
-  <!-- PAGE CONTAINER -->
-  <div class="page-container">
+  <main class="page" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-label="Pricing hero">
+      <div class="hero-left">
+        <div class="prepill">County funds expire — state funds don't</div>
+        <h1>Simple Pricing. Real Results.</h1>
+        <p class="lead">Flat fees, no percentages. Start with a free search — pay only if we find something. Filing with the county is always free.</p>
 
-    <h1>Pricing</h1>
-    <p>Select the option that fits your needs. All claim kits include step‑by‑step filing instructions.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:8px;">
+          <div class="tabs" role="tablist" aria-label="Pricing tabs">
+            <button class="tab-btn active" id="tabIndividual">Individual</button>
+            <button class="tab-btn" id="tabBusiness">Business</button>
+          </div>
 
-    <!-- PRICING GRID -->
-    <div class="pricing-grid">
-
-      <!-- Essential Report -->
-      <div class="pricing-card">
-        <h2>Essential Claim Discovery Report</h2>
-        <p class="price">$49</p>
-        <ul>
-          <li>Full refund lookup</li>
-          <li>County contact details</li>
-          <li>DIY filing instructions</li>
-        </ul>
-        <a class="primary-btn" href="checkout.html?product=essential">Choose Essential</a>
+          <div class="billing-toggle" aria-label="Billing toggle">
+            <button id="billMonthly" class="active">Monthly</button>
+            <button id="billAnnual">Annual</button>
+          </div>
+        </div>
       </div>
 
-      <!-- Complete Kit -->
-      <div class="pricing-card">
-        <h2>Complete Claim Kit</h2>
-        <p class="price">$149</p>
-        <ul>
-          <li>Everything in Essential</li>
-          <li>All required forms</li>
-          <li>Pre‑filled templates</li>
-          <li>Mailing labels</li>
-        </ul>
-        <a class="primary-btn" href="checkout.html?product=complete">Choose Complete</a>
+      <div style="text-align:right;">
+        <div style="font-weight:900;font-size:14px;color:var(--muted);">Need help choosing?</div>
+        <div style="margin-top:8px;"><a href="mailto:wttapps@outlook.com" style="text-decoration:none;color:var(--navy);font-weight:900;">Contact Sales — wttapps@outlook.com</a></div>
+      </div>
+    </section>
+
+    <!-- Pricing grid -->
+    <section id="pricingSection" aria-label="Pricing options">
+      <div class="pricing-grid" id="individualGrid">
+        <!-- Discovery $29 -->
+        <div class="card gray">
+          <h3 style="margin:0 0 8px;">Discovery</h3>
+          <div class="price">$29 <span style="font-size:12px;font-weight:800;color:var(--muted);">one-time</span></div>
+          <div class="desc">Quick report with matched records and amounts. Pay only if we find something.</div>
+          <a class="buy primary" href="https://buy.stripe.com/28E00kg4Z3uv3lJ8O76c00d">Buy $29</a>
+        </div>
+
+        <!-- Claim Ready $149 (featured) -->
+        <div class="card featured">
+          <div class="badge">MOST POPULAR</div>
+          <h3 style="margin:0 0 8px;">Claim Ready</h3>
+          <div class="price">$149 <span style="font-size:12px;font-weight:800;color:var(--muted);">one-time</span></div>
+          <div class="desc">Everything in Discovery plus completed claim forms and filing instructions.</div>
+          <a class="buy primary" href="https://buy.stripe.com/6oU7sM9GB2qr1dB4xR6c00b">Buy $149</a>
+        </div>
+
+        <!-- Full Service $499 -->
+        <div class="card dark">
+          <h3 style="margin:0 0 8px;color:var(--white);">Full Service Recovery</h3>
+          <div class="price dark">$499 <span style="font-size:12px;font-weight:800;color:rgba(255,255,255,0.85);">one-time</span></div>
+          <div class="desc" style="color:rgba(255,255,255,0.9);">We handle the paperwork and filing with the county on your behalf.</div>
+          <a class="buy secondary" href="https://buy.stripe.com/cNibJ28Cx8OP09x4xR6c009">Buy $499</a>
+        </div>
+
+        <!-- Claim Watch $9.99/mo -->
+        <div class="card dashed" id="claimWatchCard">
+          <h3 style="margin:0 0 8px;">Claim Watch</h3>
+          <div class="price">$9.99 <span style="font-size:12px;font-weight:800;color:var(--muted);">/mo</span></div>
+          <div class="desc">Monitor new county records for matches. Monthly or annual billing.</div>
+          <a class="buy primary" id="claimWatchBuy" href="https://buy.stripe.com/14A6oIdWR4yz1dB7K36c008">Subscribe</a>
+        </div>
       </div>
 
-      <!-- Premium Kit -->
-      <div class="pricing-card">
-        <h2>Premium Claim Kit + 1‑Year Monitoring</h2>
-        <p class="price">$199</p>
-        <ul>
-          <li>Everything in Complete</li>
-          <li>12 months refund monitoring</li>
-          <li>Priority support</li>
-        </ul>
-        <a class="primary-btn" href="checkout.html?product=premium">Choose Premium</a>
-      </div>
+      <!-- Business grid (hidden by default) -->
+      <div class="pricing-grid" id="businessGrid" style="display:none;">
+        <div class="card gray">
+          <h3 style="margin:0 0 8px;">Business Discovery</h3>
+          <div class="price">$99 <span style="font-size:12px;font-weight:800;color:var(--muted);">one-time</span></div>
+          <div class="desc">Search and report tailored for businesses and entities.</div>
+          <a class="buy primary" href="https://buy.stripe.com/eVqdRabOJe99cWjfcv6c00c">Buy $99</a>
+        </div>
 
-      <!-- Monitoring Only -->
-      <div class="pricing-card">
-        <h2>CCT Annual Monitoring Service</h2>
-        <p class="price">$79/yr or $9.99/mo</p>
-        <ul>
-          <li>Continuous refund monitoring</li>
-          <li>Instant alerts</li>
-          <li>Works even without a current claim</li>
-        </ul>
-        <a class="primary-btn" href="checkout.html?product=monitoring">Choose Monitoring</a>
-      </div>
+        <div class="card featured">
+          <div class="badge">MOST POPULAR</div>
+          <h3 style="margin:0 0 8px;">Business Claim Ready</h3>
+          <div class="price">$299 <span style="font-size:12px;font-weight:800;color:var(--muted);">one-time</span></div>
+          <div class="desc">Complete claim package for businesses, including entity documentation prep.</div>
+          <a class="buy primary" href="https://buy.stripe.com/bJe4gAbOJ2qrcWj2pJ6c00a">Buy $299</a>
+        </div>
 
+        <div class="card dashed">
+          <h3 style="margin:0 0 8px;">Business Claim Watch</h3>
+          <div class="price">$29 <span style="font-size:12px;font-weight:800;color:var(--muted);">/mo</span></div>
+          <div class="desc">Monitor county records for business matches. Monthly or annual billing.</div>
+          <a class="buy primary" href="https://buy.stripe.com/14A6oIdWR4yz1dB7K36c008">Subscribe</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guidance -->
+    <div class="guidance" role="note">
+      Start with a free search. We recommend the right plan after you see your results — most individuals start with the $29 Discovery or $149 Claim Ready.
     </div>
 
-  </div>
+    <!-- Comparison table -->
+    <div class="comparison" aria-label="Value comparison">
+      <h3 style="margin-top:0;">How CountyClaimTracker compares</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>Cost</th>
+            <th>Speed</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Free State Portals</td>
+            <td>$0</td>
+            <td>Varies</td>
+            <td>Fragmented; counties often not included</td>
+          </tr>
+          <tr>
+            <td>Percentage Finders</td>
+            <td>10–15% of recovery</td>
+            <td>Days–Weeks</td>
+            <td>High cost; you pay a cut of recovery</td>
+          </tr>
+          <tr>
+            <td><strong>CountyClaimTracker</strong></td>
+            <td><strong>$29 one-time</strong></td>
+            <td><strong>60 minutes</strong></td>
+            <td><strong>Flat fee; filing with county is always free</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
+    <!-- Callouts -->
+    <div class="callouts">
+      <div class="callout green">
+        Less than 1% of your recovery on a $3,400 claim — our $29 fee is charm-priced.
+      </div>
+      <div class="callout amber">
+        County funds expire — your report tells you your deadline. County funds expire — state funds don't.
+      </div>
+      <div class="callout blue">
+        One-time fee. No subscription. No percentage. Transparent pricing.
+      </div>
+    </div>
+
+    <!-- Annual highlight -->
+    <div class="annual" aria-label="Annual plan highlight">
+      <div>
+        <div style="font-weight:900;font-size:18px;">Annual Claim Watch — Best Value</div>
+        <div style="margin-top:6px; color:rgba(255,255,255,0.9); font-weight:800;">Monthly: $9.99 / mo · Annual: $79 / yr (save 34%)</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="best">BEST VALUE</div>
+        <a class="buy primary" href="https://buy.stripe.com/28E5kE061aWX7BZc0j6c007">Choose Annual — $79/yr</a>
+      </div>
+    </div>
+
+    <!-- FAQ (12 questions) -->
+    <section class="faq" aria-label="Pricing FAQ">
+      <h3 style="margin-top:18px;">Frequently Asked Questions</h3>
+      <div class="accordion" id="faqAccordion">
+        <div class="qa">
+          <button aria-expanded="false">Is it really free to search? <span aria-hidden="true">+</span></button>
+          <div class="answer">Yes. Searching our database is free. You only pay a flat fee if we find a match and you want the full report. Filing with the county is always free.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">Why do county funds expire but state funds don't? <span aria-hidden="true">+</span></button>
+          <div class="answer">County rules and retention policies vary; some counties have deadlines or procedures that can result in funds being forfeited if not claimed. State-held unclaimed property is typically retained under state law and does not expire.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What does the Discovery report include? <span aria-hidden="true">+</span></button>
+          <div class="answer">Discovery returns matched records and amounts (teaser). County details and deadlines are revealed after payment for the full report.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What is included in Claim Ready? <span aria-hidden="true">+</span></button>
+          <div class="answer">Claim Ready includes pre-filled claim forms, required documents checklist, claim form PDFs, and step-by-step filing instructions to submit to the county.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What does Full Service do? <span aria-hidden="true">+</span></button>
+          <div class="answer">Full Service Recovery handles paperwork and filing on your behalf and provides priority support for complex claims.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">How does Claim Watch work? <span aria-hidden="true">+</span></button>
+          <div class="answer">Claim Watch scans new county records monthly and emails you when a match appears. You can cancel anytime.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">Do you take a percentage of my recovery? <span aria-hidden="true">+</span></button>
+          <div class="answer">No. We charge flat fees only. We never take a percentage of your recovery.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What states do you cover? <span aria-hidden="true">+</span></button>
+          <div class="answer">We currently cover county-level records for 21 states and add more monthly. Coverage is updated regularly.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">How fast will I get my report? <span aria-hidden="true">+</span></button>
+          <div class="answer">Discovery results appear in about 60 seconds. Paid full reports are delivered within 60 minutes via email.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">Is my information secure? <span aria-hidden="true">+</span></button>
+          <div class="answer">Yes. We use Stripe for payments and follow best practices for data handling. Notification emails are sent to wttapps@outlook.com.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What if my name is common? <span aria-hidden="true">+</span></button>
+          <div class="answer">We return all matching records and variations. Our report includes supporting details (dates, amounts, record types) to help you identify the correct match.</div>
+        </div>
+
+        <div class="qa">
+          <button aria-expanded="false">What if I need help filing? <span aria-hidden="true">+</span></button>
+          <div class="answer">We offer Claim Ready ($149) and Full Service ($499) options to prepare documents or file on your behalf. Filing with the county is always free.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <div class="final-cta" aria-label="Final call to action">
+      <div style="font-weight:900;">Ready to see if county funds are waiting for you?</div>
+      <form class="search-card" action="search-results.html" method="get" onsubmit="return validateSearch(this);">
+        <input name="first" type="text" placeholder="First name" required />
+        <input name="last" type="text" placeholder="Last name" required />
+        <select name="state" required>
+          <option value="">State</option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
+        <button class="search-cta" type="submit">Search My Name Free →</button>
+      </form>
+    </div>
+  </main>
+
+  <footer style="max-width:var(--max-width);margin:24px auto;padding:0 16px 40px;color:var(--muted);font-weight:800;">
+    CountyClaimTracker.com · The only consolidated database of county-level unclaimed property in America · Questions: <a href="mailto:wttapps@outlook.com">wttapps@outlook.com</a> · 760-413-1314
+    <div style="margin-top:8px;">CountyClaimTracker.com is a private research service. Not affiliated with any government agency. Filing with the county is always free.</div>
+  </footer>
+
+  <script>
+    // Stripe links (real links provided)
+    const STRIPE_LINK_29 = 'https://buy.stripe.com/28E00kg4Z3uv3lJ8O76c00d';
+    const STRIPE_LINK_149 = 'https://buy.stripe.com/6oU7sM9GB2qr1dB4xR6c00b';
+    const STRIPE_LINK_499 = 'https://buy.stripe.com/cNibJ28Cx8OP09x4xR6c009';
+    const STRIPE_LINK_MONTHLY = 'https://buy.stripe.com/14A6oIdWR4yz1dB7K36c008';
+    const STRIPE_LINK_ANNUAL = 'https://buy.stripe.com/28E5kE061aWX7BZc0j6c007';
+    const STRIPE_LINK_99 = 'https://buy.stripe.com/eVqdRabOJe99cWjfcv6c00c';
+    const STRIPE_LINK_299 = 'https://buy.stripe.com/bJe4gAbOJ2qrcWj2pJ6c00a';
+
+    // Announcement dismiss
+    (function(){
+      const ann = document.getElementById('announcement');
+      const btn = document.getElementById('dismissAnn');
+      btn.addEventListener('click', function(){ ann.style.display='none'; try{ localStorage.setItem('cct_pricing_ann','1'); }catch(e){} });
+      try{ if(localStorage.getItem('cct_pricing_ann')==='1') ann.style.display='none'; }catch(e){}
+    })();
+
+    // Tabs: Individual / Business
+    const tabInd = document.getElementById('tabIndividual');
+    const tabBiz = document.getElementById('tabBusiness');
+    const indGrid = document.getElementById('individualGrid');
+    const bizGrid = document.getElementById('businessGrid');
+
+    tabInd.addEventListener('click', function(){
+      tabInd.classList.add('active'); tabBiz.classList.remove('active');
+      indGrid.style.display = 'flex'; bizGrid.style.display = 'none';
+    });
+    tabBiz.addEventListener('click', function(){
+      tabBiz.classList.add('active'); tabInd.classList.remove('active');
+      indGrid.style.display = 'none'; bizGrid.style.display = 'flex';
+    });
+
+    // Billing toggle: Monthly / Annual
+    const billMonthly = document.getElementById('billMonthly');
+    const billAnnual = document.getElementById('billAnnual');
+    const claimWatchBuy = document.getElementById('claimWatchBuy');
+
+    function setBilling(mode){
+      if(mode === 'monthly'){
+        billMonthly.classList.add('active'); billAnnual.classList.remove('active');
+        // Claim Watch monthly
+        claimWatchBuy.href = STRIPE_LINK_MONTHLY;
+        // Update any other monthly links if needed (none here)
+      } else {
+        billAnnual.classList.add('active'); billMonthly.classList.remove('active');
+        claimWatchBuy.href = STRIPE_LINK_ANNUAL;
+      }
+    }
+    billMonthly.addEventListener('click', ()=>setBilling('monthly'));
+    billAnnual.addEventListener('click', ()=>setBilling('annual'));
+    // default monthly
+    setBilling('monthly');
+
+    // FAQ accordion
+    document.querySelectorAll('#faqAccordion .qa button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('#faqAccordion .qa button').forEach(function(b){
+          b.setAttribute('aria-expanded','false');
+          if(b.nextElementSibling) b.nextElementSibling.style.display='none';
+        });
+        if(!expanded){
+          this.setAttribute('aria-expanded','true');
+          if(this.nextElementSibling) this.nextElementSibling.style.display='block';
+        }
+      });
+    });
+
+    // Validate search form
+    function validateSearch(form){
+      const f = form.first.value.trim();
+      const l = form.last.value.trim();
+      const s = form.state.value;
+      if(!f || !l || !s){
+        alert('Please enter first name, last name, and state.');
+        return false;
+      }
+      return true;
+    }
+
+    // Wire buy buttons to correct links (defense-in-depth)
+    (function wireLinks(){
+      // Individual
+      document.querySelectorAll('.pricing-grid a.buy').forEach(a=>{
+        const txt = a.textContent || '';
+        if(txt.includes('$29')) a.href = STRIPE_LINK_29;
+        if(txt.includes('$149')) a.href = STRIPE_LINK_149;
+        if(txt.includes('$499')) a.href = STRIPE_LINK_499;
+        if(txt.includes('$99')) a.href = STRIPE_LINK_99;
+        if(txt.includes('$299')) a.href = STRIPE_LINK_299;
+      });
+      // Claim Watch already set via billing toggle
+    })();
+
+    // Accessibility: keyboard focus for tabs
+    tabInd.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tabInd.click(); });
+    tabBiz.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tabBiz.click(); });
+
+  </script>
 </body>
 </html>
 
