@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank You — CountyClaimTracker</title>
+  <meta name="description" content="Payment confirmed. Your CountyClaimTracker report is being prepared and will be emailed within 60 minutes." />
+  <style>
+    :root{
+      --navy:#1a2744;
+      --orange:#f97316;
+      --green:#16a34a;
+      --white:#ffffff;
+      --gray:#f8fafc;
+      --muted:#6b7280;
+      --card-radius:12px;
+      --max-width:1100px;
+      --shadow: 0 10px 30px rgba(26,39,68,0.12);
+      --cta-height:64px;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      color:#0f172a;
+      background:linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .wrap{max-width:var(--max-width); margin:28px auto; padding:0 16px;}
+
+    /* Confirmation banner */
+    .confirm{
+      background:var(--green);
+      color:var(--white);
+      padding:18px;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .confirm h1{margin:0; font-size:20px; font-weight:900;}
+    .confirm p{margin:4px 0 0; font-weight:800;}
+
+    /* Order summary */
+    .order{
+      background:var(--white);
+      padding:14px;
+      border-radius:10px;
+      box-shadow:var(--shadow);
+      margin-top:16px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .order .left{font-weight:900;}
+    .order .right{font-weight:900; color:var(--navy);}
+
+    /* Steps */
+    .steps{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
+    .step{flex:1; min-width:220px; background:var(--white); padding:14px; border-radius:10px; box-shadow:var(--shadow); font-weight:800;}
+    .step .emoji{font-size:20px; margin-right:8px;}
+
+    /* Upsell immediate */
+    .upsell{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px; align-items:start;}
+    .opt{background:var(--white); padding:14px; border-radius:10px; box-shadow:var(--shadow); font-weight:900;}
+    .opt.small{opacity:0.95;}
+    .opt.featured{background:linear-gradient(180deg,#fffaf6,#fff7f0); border:2px solid var(--orange); transform:scale(1.01); position:relative;}
+    .badge{position:absolute; top:-12px; right:-12px; background:var(--orange); color:var(--white); padding:6px 10px; border-radius:999px; font-weight:900; font-size:12px;}
+    .opt h3{margin:0 0 8px;}
+    .opt p{margin:8px 0 0; color:var(--muted); font-weight:800;}
+
+    .upsell .cta{
+      display:inline-block;
+      margin-top:12px;
+      background:var(--orange);
+      color:var(--white);
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:900;
+      text-decoration:none;
+    }
+
+    /* Monitoring upsell */
+    .monitor{margin-top:18px; background:var(--navy); color:var(--white); padding:16px; border-radius:12px; box-shadow:var(--shadow);}
+    .monitor h4{margin:0 0 8px;}
+    .monitor .features{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; font-weight:800;}
+    .monitor .price{font-size:22px; font-weight:900; margin-top:12px;}
+    .monitor .btn{display:inline-block; margin-top:12px; background:var(--orange); color:var(--white); padding:12px 16px; border-radius:10px; text-decoration:none; font-weight:900;}
+
+    /* Referral */
+    .referral{margin-top:18px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .referral .box{background:var(--white); padding:12px; border-radius:10px; box-shadow:var(--shadow); font-weight:900;}
+    .share{background:var(--green); color:var(--white); padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:900;}
+
+    /* Contact & disclaimer */
+    .contact{margin-top:18px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .disclaimer{margin-top:14px; background:#e8f4ff; padding:12px; border-radius:10px; color:var(--navy); font-weight:800;}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .upsell{grid-template-columns:1fr;}
+      .steps{flex-direction:column;}
+      .monitor .features{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="page">
+    <!-- SECTION 1: Confirmation Banner -->
+    <div class="confirm" role="status" aria-live="polite">
+      <div>
+        <h1>✅ PAYMENT CONFIRMED — THANK YOU!</h1>
+        <p>Your County Unclaimed Property Report is being prepared and will be emailed to you within 60 minutes.</p>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:900;" id="thankName">—</div>
+        <div style="font-size:13px; margin-top:6px;">If you don't see it, check spam or promotions.</div>
+      </div>
+    </div>
+
+    <!-- Order summary -->
+    <div class="order" id="orderSummary" aria-live="polite">
+      <div class="left">
+        <div id="orderProduct">Product: Discovery Report</div>
+        <div id="orderEmail" style="font-weight:800; color:var(--muted); margin-top:6px;">Email: —</div>
+      </div>
+      <div class="right">
+        <div id="orderAmount">$29</div>
+        <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="orderId">Confirmation: —</div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: What happens next -->
+    <div class="steps" aria-label="What happens next">
+      <div class="step">
+        <div style="font-size:20px;">📧</div>
+        <div style="font-weight:900; margin-top:8px;">Check Your Email</div>
+        <div style="color:var(--muted); margin-top:8px; font-weight:800;">We will email your full report within 60 minutes. Check spam/promotions if you don't see it.</div>
+      </div>
+      <div class="step">
+        <div style="font-size:20px;">📋</div>
+        <div style="font-weight:900; margin-top:8px;">Review Your Report</div>
+        <div style="color:var(--muted); margin-top:8px; font-weight:800;">Your report will include county (revealed after payment), amount, claim portal, and step-by-step instructions.</div>
+      </div>
+      <div class="step">
+        <div style="font-size:20px;">🏛️</div>
+        <div style="font-weight:900; margin-top:8px;">File Your Claim Free</div>
+        <div style="color:var(--muted); margin-top:8px; font-weight:800;">Filing with the county is always free. We provide optional paid help if you want us to prepare and submit paperwork.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Immediate Upsell -->
+    <div class="upsell" aria-label="One question before your report arrives">
+      <!-- Option A -->
+      <div class="opt small" aria-hidden="false">
+        <h3>No thanks — I'll file it myself</h3>
+        <p style="margin-top:8px; color:var(--muted);">I prefer to handle the claim on my own using the instructions in the report.</p>
+        <div style="margin-top:12px; font-weight:800; color:var(--muted);">No additional charge</div>
+      </div>
+
+      <!-- Option B (Featured) -->
+      <div class="opt featured" aria-hidden="false">
+        <div class="badge">RECOMMENDED</div>
+        <h3>Yes — Prepare My Claim Package</h3>
+        <div style="margin-top:8px; font-weight:900; color:var(--navy);">$149</div>
+        <p style="margin-top:8px; color:var(--muted);">Includes your $29 report plus pre-filled forms, document prep, submission walkthrough, priority support, and a 30-day follow-up.</p>
+        <a id="upsell149" class="cta" href="https://buy.stripe.com/6oU7sM9GB2qr1dB4xR6c00b" rel="noopener noreferrer">Add Claim Assistance — $149</a>
+        <div style="margin-top:10px; color:var(--muted); font-weight:800;">Most people complete their claim in under an hour with assistance.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Monitoring Upsell -->
+    <div class="monitor" aria-label="Monitoring upsell">
+      <h4>Never Miss Future Records</h4>
+      <div style="font-weight:800; color:rgba(255,255,255,0.95); margin-top:6px;">Keep watching county records and get notified when new matches appear.</div>
+
+      <div class="features" style="margin-top:12px;">
+        <div>✅ Monthly scans of county records</div>
+        <div>✅ Email alerts for new matches</div>
+        <div>✅ Direct claim portal links</div>
+        <div>✅ Priority email support</div>
+      </div>
+
+      <div class="price" style="margin-top:12px;">$9.99 / month — cancel anytime</div>
+      <a id="addMonitor" class="btn" href="https://buy.stripe.com/14A6oIdWR4yz1dB7K36c008" rel="noopener noreferrer">ADD MONITORING — $9.99/month</a>
+      <div class="small" style="margin-top:10px; color:rgba(255,255,255,0.9); font-weight:800;">Most users who find county funds find them 6–18 months after their initial search.</div>
+    </div>
+
+    <!-- SECTION 5: Referral -->
+    <div class="referral" aria-label="Referral">
+      <div class="box">
+        <strong>Earn $10 Per Referral</strong>
+        <div style="color:var(--muted); margin-top:8px; font-weight:800;">Share CountyClaimTracker with friends and earn $10 for every person who pays for a report.</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <a id="shareNow" class="share" href="#" role="button">Share</a>
+        <div style="color:var(--muted); font-weight:800;">Referral payments processed after successful delivery.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Contact -->
+    <div class="contact" aria-label="Contact">
+      <div style="font-weight:900;">Questions or need help?</div>
+      <div style="font-weight:800;"><a href="mailto:wttapps@outlook.com">wttapps@outlook.com</a> · 760-413-1314 · Mon–Fri 9am–5pm PT</div>
+    </div>
+
+    <!-- SECTION 7: Disclaimer -->
+    <div class="disclaimer" aria-live="polite">
+      CountyClaimTracker.com is a private research service. Not affiliated with any government agency. Filing is always free at the county level.
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // Replaceable constants (already provided)
+      const STRIPE_LINK_149 = 'https://buy.stripe.com/6oU7sM9GB2qr1dB4xR6c00b';
+      const STRIPE_LINK_MONTHLY = 'https://buy.stripe.com/14A6oIdWR4yz1dB7K36c008';
+      const ADMIN_EMAIL = 'wttapps@outlook.com';
+
+      // EmailJS placeholders: replace with your real values in production
+      const EMAILJS_SERVICE_ID = ''; // e.g., 'service_xxx'
+      const EMAILJS_TEMPLATE_ID = ''; // e.g., 'template_xxx'
+      const EMAILJS_PUBLIC_KEY = ''; // e.g., 'user_xxx'
+
+      // Utility: safe JSON parse from sessionStorage
+      function safeParse(key){
+        try{
+          const raw = sessionStorage.getItem(key);
+          if(!raw) return null;
+          return JSON.parse(raw);
+        }catch(e){
+          return null;
+        }
+      }
+
+      // Read order and customer info from sessionStorage (various keys used across pages)
+      const order = safeParse('cct_order') || safeParse('cct_payment') || safeParse('cct_search_results') || safeParse('cct_search_results_v1') || null;
+      const customerName = sessionStorage.getItem('cct_name') || (order && order.query ? ((order.query.first||'') + ' ' + (order.query.last||'')).trim() : '') || '';
+      const customerEmail = sessionStorage.getItem('cct_email') || (order && order.email ? order.email : '') || '';
+      const product = sessionStorage.getItem('cct_product') || (order && order.product ? order.product : 'Discovery Report') || 'Discovery Report';
+      const amount = sessionStorage.getItem('cct_amount') || (order && order.amount ? order.amount : '$29') || '$29';
+      const confirmationId = sessionStorage.getItem('cct_confirmation') || (order && order.confirmation ? order.confirmation : '') || '';
+
+      // Populate UI
+      document.getElementById('thankName').textContent = customerName ? customerName : 'Customer';
+      document.getElementById('orderProduct').textContent = 'Product: ' + product;
+      document.getElementById('orderEmail').textContent = 'Email: ' + (customerEmail || '—');
+      document.getElementById('orderAmount').textContent = amount;
+      document.getElementById('orderId').textContent = confirmationId ? ('Confirmation: ' + confirmationId) : ('Order time: ' + new Date().toLocaleString());
+
+      // Wire upsell links (ensure they use provided constants)
+      document.getElementById('upsell149').href = STRIPE_LINK_149;
+      document.getElementById('addMonitor').href = STRIPE_LINK_MONTHLY;
+
+      // Share button behavior (Web Share API or copy)
+      document.getElementById('shareNow').addEventListener('click', function(e){
+        e.preventDefault();
+        const shareText = `I just used CountyClaimTracker to search county unclaimed property. Try it: https://CountyClaimTracker.com`;
+        if(navigator.share){
+          navigator.share({ title: 'CountyClaimTracker', text: shareText, url: 'https://CountyClaimTracker.com' }).catch(()=>{});
+        } else if(navigator.clipboard){
+          navigator.clipboard.writeText(shareText).then(()=>{ alert('Share link copied to clipboard'); }).catch(()=>{ prompt('Copy this link to share:', 'https://CountyClaimTracker.com'); });
+        } else {
+          prompt('Copy and share this link:', 'https://CountyClaimTracker.com');
+        }
+      });
+
+      // Referral share (same as shareNow)
+      document.getElementById('shareNow').addEventListener('click', function(){});
+
+      // Send admin email on page load using EmailJS if configured; handle errors silently
+      async function sendAdminNotification(){
+        const subject = `✅ CCT Report Delivered — ${customerName || 'Customer'}`;
+        const timestamp = new Date().toISOString();
+        const bodyLines = [
+          `Customer name: ${customerName || 'N/A'}`,
+          `Customer email: ${customerEmail || 'N/A'}`,
+          `Product: ${product}`,
+          `Amount: ${amount}`,
+          `Confirmation: ${confirmationId || 'N/A'}`,
+          `Timestamp: ${timestamp}`,
+          '',
+          'This notification was generated by the thank-you page.'
+        ];
+        const body = bodyLines.join('\n');
+
+        // Try EmailJS if configured
+        try {
+          if (typeof emailjs === 'undefined' && (EMAILJS_SERVICE_ID || EMAILJS_PUBLIC_KEY)) {
+            // load EmailJS SDK dynamically
+            await new Promise((resolve, reject) => {
+              const s = document.createElement('script');
+              s.src = 'https://cdn.emailjs.com/dist/email.min.js';
+              s.onload = resolve;
+              s.onerror = reject;
+              document.head.appendChild(s);
+            });
+          }
+        } catch (e) {
+          // ignore load errors
+        }
+
+        try {
+          if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
+            try {
+              emailjs.init(EMAILJS_PUBLIC_KEY);
+            } catch (e) {
+              // ignore if already initialized
+            }
+            const templateParams = {
+              to_email: ADMIN_EMAIL,
+              subject: subject,
+              message: body
+            };
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+            return;
+          }
+        } catch (err) {
+          // silent
+          console.warn('EmailJS send failed', err);
+        }
+
+        // Fallback: attempt to open a mailto in a new tab (best-effort, will require user action)
+        try {
+          const mailto = `mailto:${encodeURIComponent(ADMIN_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          // open in background tab without stealing focus if possible
+          const a = document.createElement('a');
+          a.href = mailto;
+          a.style.display = 'none';
+          a.target = '_blank';
+          document.body.appendChild(a);
+          // Do not click automatically to avoid user disruption; instead, attempt a silent fetch to a logging endpoint if available (not implemented)
+          // a.click();
+          // remove anchor
+          setTimeout(()=>{ try{ document.body.removeChild(a); }catch(e){} }, 1000);
+        } catch (e) {
+          // silent
+        }
+      }
+
+      // Fire and forget
+      try { sendAdminNotification(); } catch(e){ /* silent */ }
+
+      // Defensive: store order info for later pages if not present
+      try {
+        const now = Date.now();
+        const saved = {
+          name: customerName,
+          email: customerEmail,
+          product: product,
+          amount: amount,
+          confirmation: confirmationId || ('cct-' + now),
+          timestamp: now
+        };
+        if(!sessionStorage.getItem('cct_order')) sessionStorage.setItem('cct_order', JSON.stringify(saved));
+      } catch(e){}
+
+    })();
+  </script>
+</body>
+</html>
