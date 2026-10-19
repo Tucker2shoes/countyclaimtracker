@@ -1,34 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>CountyClaimTracker</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CountyClaimTracker.com — The Consolidated County Unclaimed Property Database</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Announcement Bar */
+    #announcement-bar {
+      background: #f97316;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+    }
+
+    #announcement-bar a {
+      color: white;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    #announcement-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* Sticky Nav */
+    .sticky-nav {
+      background: #0a1a3a;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 45px;
+      z-index: 998;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(to bottom right, #0a1a3a, #1e3a8a);
+      color: white;
+      padding: 120px 20px 60px;
+    }
+
+    .hero-title {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+
+    /* Search Card */
+    .search-card {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .search-button {
+      background: #0a1a3a;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+    }
+  </style>
 </head>
 
-<body>
+<body class="has-announcement">
 
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <div class="logo">CountyClaimTracker</div>
-    <div class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="search.html">Search</a>
-      <a href="admin.html">Admin</a>
+  <!-- Announcement Bar -->
+  <aside id="announcement-bar">
+    <div>
+      ⚠️ County funds expire — state funds don't. Search free before your deadline passes.
+      <a href="#search-form">Search Now →</a>
     </div>
-  </div>
+    <button id="announcement-close">&times;</button>
+  </aside>
 
-  <!-- PAGE CONTAINER -->
-  <div class="page-container">
+  <!-- Sticky Navigation -->
+  <header class="sticky-nav">
+    <div class="nav-container">
+      <span class="logo-text">CountyClaimTracker<span class="logo-dot">.com</span></span>
 
-    <h1>Find Hidden County Refunds</h1>
-    <p>
-      Every year, millions in county-held refunds go unclaimed.  
-      Search by last name to discover potential refunds and unlock a guided claim kit.
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#search-form">Search</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#urgency">Urgency</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <h1 class="hero-title">County Governments Are Holding Your Money</h1>
+    <h1>CountyClaimTracker.com — The Consolidated County Unclaimed Property Database</h1>
+
+    <p class="hero-subtitle">
+      Most people know about state unclaimed property. Almost nobody knows that counties hold their own separate pool — stale checks, property tax refunds, surplus funds from tax sales. And unlike state funds, county funds expire.
     </p>
 
-    <a class="primary-btn" href="search.html">Start Searching</a>
+    <!-- Search Form -->
+    <div class="search-card" id="search-form">
+      <form id="searchForm">
+        
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input id="firstName" type="text" class="form-input" placeholder="e.g. Robert" required>
+        </div>
 
-  </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input id="lastName" type="text" class="form-input" placeholder="e.g. Davis" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <select id="stateSelect" class="form-select" required>
+            <option value="">Select State</option>
+            <option value="CA" selected>California (CA)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="search-button">Search County Claim Tracker</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Connect search.js -->
+  <script src="search.js"></script>
 
 </body>
 </html>
