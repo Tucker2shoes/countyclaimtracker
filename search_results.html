@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your County Claim Results</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1a3a;
+      margin-bottom: 20px;
+    }
+
+    .result-card {
+      background: #eef2ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 5px solid #0a1a3a;
+    }
+
+    .result-card p {
+      margin: 6px 0;
+      font-size: 16px;
+    }
+
+    .no-results {
+      text-align: center;
+      font-size: 20px;
+      padding: 40px;
+      color: #444;
+    }
+
+    .back-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #0a1a3a;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Your County Claim Results</h1>
+
+    <div id="resultsContainer"></div>
+
+    <a href="/" class="back-button">Search Again</a>
+  </div>
+
+  <script>
+    const results = JSON.parse(localStorage.getItem("searchResults"));
+
+    const container = document.getElementById("resultsContainer");
+
+    if (!results || results.length === 0) {
+      container.innerHTML = `
+        <div class="no-results">
+          No matching county-held funds were found.<br><br>
+          Try searching again with a different spelling or variation.
+        </div>
+      `;
+    } else {
+      let html = "";
+
+      results.forEach(r => {
+        html += `
+          <div class="result-card">
+            <p><strong>Name:</strong> ${r.name}</p>
+            <p><strong>County:</strong> ${r.county}</p>
+            <p><strong>Amount:</strong> $${r.amount}</p>
+            <p><strong>Status:</strong> ${r.status}</p>
+            <p><strong>Address:</strong> ${r.address}</p>
+            <p><strong>City:</strong> ${r.city}</p>
+            <p><strong>ZIP:</strong> ${r.zip}</p>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
+
